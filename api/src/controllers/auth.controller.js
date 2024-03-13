@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import db from '../models/index.js';
 
 const {sequelize, User, Token} = db;
-import {tokenGenerator, nodemailer} from '../utils/index.js';
+import {tokenGenerator} from '../utils/index.js';
 
 // @ desc --- Create new user
 // @ route  --POST-- [base_api]/auth/signup
