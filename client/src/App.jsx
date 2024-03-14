@@ -1,12 +1,14 @@
-import './App.css'
-import {Outlet} from "react-router-dom";
+// App.jsx
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+
 
 function App() {
     return (
-        <main>
-            <Outlet/>
-        </main>
-    )
+            <Outlet />
+     
+        
+    );
 }
 
-export default App
+export default App;

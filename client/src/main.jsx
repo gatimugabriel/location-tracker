@@ -13,6 +13,9 @@ import SignUpIn from "./screens/auth/SignUpIn.jsx";
 import PrivateRoute from "./components/auth/PrivateRoute.jsx";
 // private
 import HomePage from "./screens/HomePage.jsx";
+import Dashboard from './components/Dashboard.jsx';
+import Login from  "./components/Login.jsx";
+
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -20,6 +23,11 @@ const router = createBrowserRouter(
 
             {/* public pages */}
             <Route path="/auth" element={<SignUpIn/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/dashboard" element={<Dashboard/>} />
+
+
+
 
             {/* private pages */}
             <Route element={<PrivateRoute/>}>
