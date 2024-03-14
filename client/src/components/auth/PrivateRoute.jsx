@@ -7,7 +7,7 @@ export default function PrivateRoute() {
 
     return (
         userInfo ? <Outlet/> :
-            <Navigate to={"/auth"} state={{path: location.pathname}}/>
+            <Navigate to={"/Login"} state={{path: location.pathname}}/>
     )
 
 }
