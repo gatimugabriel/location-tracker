@@ -1,0 +1,161 @@
+.dashboard{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+.map-integration{
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+}
+
+.leaflet-container{
+    height: 100vh;
+}
+
+.sidewhole-container{
+    position: relative;
+ /* Adjust left position as needed */
+    z-index: 2;
+    top: 5px; /* Adjust top position as needed */
+    left: 20px;
+}
+
+
+
+.trigger-1 {
+    cursor: pointer; /* Add pointer cursor for better UX */
+    visibility: visible;
+    z-index: 5;
+    border: 1px solid #588157;
+    text-align: center;
+    border-radius: 10px;
+    height: 30px;
+    position: relative;
+    background-color: #D9D9D9;
+
+    
+}
+
+
+.sidebar{
+    width: 350px;
+    height: 100vh;
+    background-color: aliceblue;
+    position: absolute;
+    top: -5px;
+    left: -20px;
+    z-index: 0;
+    text-align: center;
+
+}
+
+.logo{
+    font-weight: bolder;
+    font-size: 1.25em;
+    padding-bottom: 2px;
+}
+  
+.sidebar.active{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: var(--speed) ease;
+}
+.sidebar.inactive{
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: var(--speed) ease;
+}
+
+.trigger-container {
+    position: absolute;
+    top:0px; /* Adjust top position as needed */
+    left: 0px; /* Adjust left position as needed */
+    z-index: 999;
+    color:black /* Ensure the trigger icon is above other content */
+  }
+  
+.sidebar-options{
+    display:flex;
+    position: relative;
+
+
+    
+}
+
+.sidebar-options{
+    position: absolute;
+    top: 35px;
+    left: 75px;
+
+    
+}
+
+.option{
+    padding: 2px 10px;
+    border: 1px solid #588157;
+    border-radius: 10px;
+    text-align: center;
+    margin-left: 10px;
+    background-color: #D9D9D9;
+}
+
+.route-inputs {
+    text-align: center;
+    margin-top: 100px;
+    
+}
+
+.route-inputs input {
+    color: #000;
+    display: block;
+    margin: 10px auto; /* Adjust spacing as needed */
+    background-color: white;
+    border: 1px solid #588157;
+    border-radius: 20px;
+    height: 45px;
+    width: 270px;
+
+
+}
+.input-container{
+    display: flex;
+
+    
+}
+
+.placeholder-icon{
+    margin-top: 20px;
+    padding-right: 0%;
+    margin-left: 5%;
+}
+.history h3{
+    text-align: center;
+    
+}
+.history{
+    text-align: left;
+    color: black;
+    margin-top: 40px;
+}
+.history p{
+margin-left: 10px;
+}
+
+
+.history span{
+    font-size: small;
+    padding: 0;
+    margin: 0;
+}
+#pimg{
+padding-top: 100px;
+float: left;
+}
+
+.route-inputs button{
+    background-color: #588157;
+}

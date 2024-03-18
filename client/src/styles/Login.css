@@ -1,8 +1,12 @@
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    width: 100vw;
+    /* overflow: hidden; */
+    width: 100%;
+}
+
+#root{
+    width: 100%;
 }
 
 .Login-page{
