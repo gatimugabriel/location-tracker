@@ -12,9 +12,12 @@ import ErrorComponent from "./components/shared/error/ErrorComponent.jsx";
 import SignUpIn from "./screens/auth/SignUpIn.jsx";
 import PrivateRoute from "./components/auth/PrivateRoute.jsx";
 // private
-import HomePage from "./screens/HomePage.jsx";
+// import HomePage from "./screens/HomePage.jsx";
 import Dashboard from './components/Dashboard.jsx';
 import Login from  "./components/Login.jsx";
+import "./index.css";
+// import App from "./App";
+import "leaflet/dist/leaflet.css"; // <- Leaflet styles
 
 
 const router = createBrowserRouter(
@@ -24,6 +27,7 @@ const router = createBrowserRouter(
             {/* public pages */}
             <Route path="/auth" element={<SignUpIn/>}/>
             <Route path="/login" element={<Login/>}/>
+            {/* <Route path="/signup" element={<Signup/>}/> */}
             <Route path="/dashboard" element={<Dashboard/>} />
 
 
@@ -31,7 +35,7 @@ const router = createBrowserRouter(
 
             {/* private pages */}
             <Route element={<PrivateRoute/>}>
-                <Route index={true} path="/" element={<HomePage/>}/>
+            {/* <Route index={true} path="/" element={<Dashboard/>}/> */}
             </Route>
 
             {/*  Not Found Page */}
