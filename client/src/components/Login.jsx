@@ -25,7 +25,7 @@ function Login(){
                     <Link to="/dashboard"><button>Login</button></Link>
                     </div>
                     <div className="new-ac" >
-                        <p>Don’t Have an Account? <span id="gotoregister">Register</span> </p>
+                        <p>Don’t Have an Account? <Link to="/signup"><span id="gotoregister">Register</span></Link> </p>
                     </div>
 
                 </div>
