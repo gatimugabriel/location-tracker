@@ -1,10 +1,20 @@
 import asyncHandler from 'express-async-handler';
+import db from '../models/index.js';
+
+const { Location } = db;
 
 // @ desc --- Save Location
 // @ route  --POST-- [base_api]/location
 const saveLocation = asyncHandler(async (req, res) => {
-    console.log(req.body)
-    const {latitude, longitude} = req.body;
+    const { latitude, longitude } = req.body;
+
+    const newLocation = new Location({
+        latitude,
+        longitude,
+    });
+
+    await newLocation.save();
+
     res.status(201).json({
         message: "Location recorded successfully",
         data: {
@@ -17,40 +27,12 @@ const saveLocation = asyncHandler(async (req, res) => {
 // @ desc --- Get Locations
 // @ route  --GET-- [base_api]/location
 const getLocations = asyncHandler(async (req, res) => {
-    console.log('getting locations')
+    const locations = await Location.find({});
 
-    res.status(200).json([
-        {
-            latitude: 1.5074,
-            longitude: -7.1278,
-        },
-        {
-            latitude: 71.5074,
-            longitude: 0.1278,
-        },
-        {
-            latitude: 21.5074,
-            longitude: 0.1278,
-        },
-        {
-            latitude: 51.5074,
-            longitude: 0.1278,
-        },
-        {
-            latitude: 31.5074,
-            longitude: 0.1278,
-        },
-    ])
+    res.status(200).json(locations);
 })
-
-// const locationController ={
-//     saveLocation,
-//     getLocations
-// }
-// export default locationController;
 
 export {
     saveLocation,
     getLocations
 }
-

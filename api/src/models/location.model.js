@@ -1,26 +1,20 @@
-export default (sequelize, Sequelize) => {
-    const Location = sequelize.define("locations", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        timestamp: {
-            type: Sequelize.DATE,
-            allowNull: false,
-        },
+export default (mongoose) => {
+    const LocationSchema = new mongoose.Schema({
         latitude: {
-            type: Sequelize.FLOAT,
-            allowNull: false
+            type: Number,
+            required: true,
         },
         longitude: {
-            type: Sequelize.FLOAT,
-            allowNull: false
+            type: Number,
+            required: true,
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
         },
     }, {
-        freezeTableName: true,
         timestamps: true,
-    })
+    });
 
-    return {Location}
-}
+    return mongoose.model('Location', LocationSchema);
+};

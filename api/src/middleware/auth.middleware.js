@@ -64,11 +64,9 @@ const verifyRefreshToken = asyncHandler(async (req, res, next) => {
             }
 
             const existingToken = await Token.findOne({
-                where: {
-                    user_id: decoded.userId,
-                    token: refreshToken,
-                    action: 'auth'
-                }
+                user_id: decoded.userId,
+                token: refreshToken,
+                action: 'auth'
             })
 
             if (!existingToken) {
@@ -81,6 +79,5 @@ const verifyRefreshToken = asyncHandler(async (req, res, next) => {
         }
     );
 })
-
 
 export {verifyToken, verifyRefreshToken}

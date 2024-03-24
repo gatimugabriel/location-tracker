@@ -1,7 +1,8 @@
 import { check, validationResult } from "express-validator";
 
 const signupInputs = [
-    check("email", "Please include a valid email").isEmail(),
+    check("username", "username is required").not().isEmpty(),
+    check("confirmPassword", "Confirm Password is required").not().isEmpty(),
 ]
 
 const passwordInput = [

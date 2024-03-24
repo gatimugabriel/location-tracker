@@ -2,12 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
-dotenv.config();
-
 import errorMiddleware from './middleware/error.middleware.js';
 
 import db from './models/index.js';
 import routes from './routes/index.js';
+
+dotenv.config();
 
 const app = express();
 
@@ -19,7 +19,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
 // --- Routes ---//
@@ -36,20 +36,5 @@ app.listen(port, async () => {
     console.log(`Connecting to database...`);
 
     // connect to database
-    // await db.sequelize.authenticate()
-    //     .then(async () => {
-    //         console.log(`\n\t Connected to ${process.env.DB_NAME} database...`);
-    //
-    //         // sync database
-    //         await db.sequelize.sync({ alter: true })
-    //             .then(() => {
-    //                 console.log(`\n\t models synchronized successfully\n`)
-    //             })
-    //             .catch((error) => {
-    //                 console.error('Error syncing database models ', error);
-    //             });
-    //     })
-    //     .catch((error) => {
-    //         console.log(`\n\t Failed to connect to ${process.env.DB_NAME} database! \n\n\t`, error.original, '\n')
-    //     })
+    await db.connectDB()
 });

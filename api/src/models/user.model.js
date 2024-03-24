@@ -1,44 +1,35 @@
-import { genSalt, hash, compare } from 'bcrypt';
+import {compare, genSalt, hash} from 'bcrypt';
 
-export default (sequelize, Sequelize) => {
-    const User = sequelize.define("users", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-        },
+export default (mongoose) => {
+    const UserSchema = new mongoose.Schema({
         username: {
-            type: Sequelize.STRING,
+            type: String,
             unique: true,
-            allowNull: false,
+            required: true,
         },
         password: {
-            type: Sequelize.STRING,
-            allowNull: false
+            type: String,
+            required: true
         },
         locationHistory: {
-            type: Sequelize.JSON,
-            allowNull: false,
-            defaultValue: [],
+            type: Array,
+            default: [],
         }
     }, {
-        freezeTableName: true,
-        timestamps: true,
-        hooks: {
-            // -- hash password before saving user
-            beforeCreate: async (user) => {
-                if (user.password) {
-                    const salt = await genSalt(10);
-                    user.password = await hash(user.password, salt);
-                }
-            }
-        }
+        timestamps: true
     })
 
+    // -- hash password before saving user
+    UserSchema.pre('save', async function (next) {
+        if (this.password) {
+            const salt = await genSalt(10);
+            this.password = await hash(this.password, salt);
+        }
+    })
     // --  matchPassword prototype method
-    User.prototype.matchPassword = async function (inputPassword) {
-        return await compare(inputPassword, this.password);
-    };
+    UserSchema.methods.matchPassword = async function (enteredPassword) {
+        return await compare(enteredPassword, this.password);
+    }
 
-    return { User }
+    return mongoose.model('User', UserSchema);
 }
