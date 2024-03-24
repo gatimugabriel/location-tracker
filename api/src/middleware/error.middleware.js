@@ -30,4 +30,7 @@ const errorHandler = (error, req, res, next) => {
     });
 }
 
-export default {notFound, errorHandler}
+const errorMiddleware = {
+    notFound, errorHandler
+}
+export default errorMiddleware

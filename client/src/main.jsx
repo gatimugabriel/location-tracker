@@ -2,6 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+// mapbox
+// import 'mapbox-gl/dist/mapbox-gl.css'
+
 
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
 
@@ -29,9 +32,7 @@ const router = createBrowserRouter(
             <Route path="/auth" element={<SignUpIn/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>
-            <Route path="/dashboard" element={<Dashboard/>} />
-
-
+            <Route path="/" element={<Dashboard/>} />
 
 
             {/* private pages */}

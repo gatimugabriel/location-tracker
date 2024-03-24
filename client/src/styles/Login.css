@@ -21,11 +21,13 @@ body {
 .img-sec {
     width: 100%;
     height: 100vh;
+    background: center;
 }
 
 .img-sec img{
     width: 100%;
     height: 100vh;
+    object-fit: cover;
 }
 
 .input-sec{
@@ -127,6 +129,7 @@ body {
     .img-sec {
         width: 100%;
         flex: 1; /* Fill remaining space */
+        object-fit: cover;
     }
     
     .img-sec img {

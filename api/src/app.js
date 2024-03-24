@@ -4,7 +4,8 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import {errorMiddleware} from './middleware/index.js';
+import errorMiddleware from './middleware/error.middleware.js';
+
 import db from './models/index.js';
 import routes from './routes/index.js';
 
@@ -35,20 +36,20 @@ app.listen(port, async () => {
     console.log(`Connecting to database...`);
 
     // connect to database
-    await db.sequelize.authenticate()
-        .then(async () => {
-            console.log(`\n\t Connected to ${process.env.DB_NAME} database...`);
-
-            // sync database
-            await db.sequelize.sync({ alter: true })
-                .then(() => {
-                    console.log(`\n\t models synchronized successfully\n`)
-                })
-                .catch((error) => {
-                    console.error('Error syncing database models ', error);
-                });
-        })
-        .catch((error) => {
-            console.log(`\n\t Failed to connect to ${process.env.DB_NAME} database! \n\n\t`, error.original, '\n')
-        })
+    // await db.sequelize.authenticate()
+    //     .then(async () => {
+    //         console.log(`\n\t Connected to ${process.env.DB_NAME} database...`);
+    //
+    //         // sync database
+    //         await db.sequelize.sync({ alter: true })
+    //             .then(() => {
+    //                 console.log(`\n\t models synchronized successfully\n`)
+    //             })
+    //             .catch((error) => {
+    //                 console.error('Error syncing database models ', error);
+    //             });
+    //     })
+    //     .catch((error) => {
+    //         console.log(`\n\t Failed to connect to ${process.env.DB_NAME} database! \n\n\t`, error.original, '\n')
+    //     })
 });

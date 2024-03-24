@@ -16,16 +16,15 @@
 
 .sidewhole-container{
     position: relative;
- /* Adjust left position as needed */
     z-index: 2;
-    top: 5px; /* Adjust top position as needed */
+    top: 5px;
     left: 20px;
 }
 
 
 
 .trigger-1 {
-    cursor: pointer; /* Add pointer cursor for better UX */
+    cursor: pointer;
     visibility: visible;
     z-index: 5;
     border: 1px solid #588157;
@@ -42,6 +41,8 @@
 .sidebar{
     width: 350px;
     height: 100vh;
+    padding: 0.5rem;
+    overflow-y: scroll ;
     background-color: aliceblue;
     position: absolute;
     top: -5px;
@@ -76,23 +77,19 @@
     top:0px; /* Adjust top position as needed */
     left: 0px; /* Adjust left position as needed */
     z-index: 999;
+    padding-left: 0.1rem;
     color:black /* Ensure the trigger icon is above other content */
   }
   
 .sidebar-options{
     display:flex;
-    position: relative;
-
-
-    
+    position: relative
 }
 
 .sidebar-options{
     position: absolute;
     top: 35px;
-    left: 75px;
-
-    
+    left: 75px
 }
 
 .option{

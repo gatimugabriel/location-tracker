@@ -1,82 +1,94 @@
-import React, { useState } from "react";
-import MapComponent from "./Mapcomponent";
+import {useState} from "react";
+import {ChevronRight, MapPin, Menu, Navigation, Save, Settings, Share2} from 'lucide-react';
+
 import "../styles/Dashboard.css";
-import { Menu, Settings, Save, Share2,ChevronRight, MapPin, Navigation  } from 'lucide-react';
+import {useHistory} from "../hooks/useHistory.js";
+import MapComponent from "./Mapcomponent.jsx";
+import PreviousLocations from "./location/PreviousLocations.jsx";
 
-function Dashboard(){
-  const [sidebarOpen,setSidebarOpen] = useState(false);
+function Dashboard() {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const {locations, locationNames, isLoading} = useHistory()
+    const [selectedLocation, setSelectedLocation] = useState(null);
+    const [selectedMarker, setSelectedMarker] = useState(null)
 
-  const toggleSidebar= () => setSidebarOpen(!sidebarOpen);
+    const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-return(
+    const selectLocation = (location, index) => {
+        setSelectedLocation(location)
+        setSelectedMarker(index)
+    }
+
+    return (
         <div>
-          <div className="sidewhole-container">
-            <div className={`sidebar ${sidebarOpen ? 'active': 'inactive'}`}>
-            {/* Sidebar content goes here */}
-            <div className="sidebar-options">
-              <div className="option"  >
-                <Settings color="#588157" />
-              </div>
-              <div className="option" >
-                <Save color="#588157" />
-              </div>
-              <div className="option" >
-                <Share2 color="#588157" />
-              </div>
-              <div className="option" >
-                <ChevronRight  color="#588157" />
-              </div>
-            </div>
-            <div className="route-inputs">
-              <div className="input-container">
-                <MapPin color="#588157" className="placeholder-icon" />
-                <input type="text" placeholder="current Location" />
-              </div>
-              <div className="input-container">
-                <Navigation color="#588157" className="placeholder-icon" />
-                <input placeholder="go to Location"></input>
-              </div>
-              <button>GO</button>
-              
-            </div>
-            <div className="history">
-              <h3>Locations you've visited</h3>
-              <hr></hr>
-              <p id="p-img"><MapPin color="#588157" size={20} /><span>Thistle London Heathrow Terminal 5</span></p>
-              <hr></hr>
-              <p><MapPin color="#588157" size={20} /><span>Hilton Garden Inn London Heathrow Terminals 2 and 3
-</span></p>
-              <hr></hr>
-              <p><MapPin color="#588157" size={20} /><span>Holiday Inn Express London Heathrow T4, an IHG Hotel</span></p>
-              <hr></hr>
-              <p><MapPin color="#588157" size={20}/><span>Crowne Plaza London Heathrow T4, an IHG Hotel</span></p>
-              <hr></hr>
-              <p><MapPin color="#588157" size={20}/><span>Travelodge London Kingston upon Thames</span></p>
-              
-              
+            <div className="sidewhole-container">
 
-            </div>
-            
-            </div>
-            <div className="trigger-container">
-              <div className="logo">LOGO</div>
-              
-                <div className="trigger-1" onClick={toggleSidebar} >
-                  <Menu color="#588157" />
+                {/* ******* Sidebar content ********* */}
+                <div className={`sidebar ${sidebarOpen ? "active" : "inactive"}`}>
+
+                    {/* options */}
+                    <div className="sidebar-options">
+                        <div className="option">
+                            <Settings color="#588157"/>
+                        </div>
+                        <div className="option">
+                            <Save color="#588157"/>
+                        </div>
+                        <div className="option">
+                            <Share2 color="#588157"/>
+                        </div>
+                        <div className="option">
+                            <ChevronRight color="#588157"/>
+                        </div>
+                    </div>
+
+                    {/* route inputs */}
+                    <div className="route-inputs">
+                        <div className="input-container">
+                            <MapPin color="#588157" className="placeholder-icon"/>
+                            <input type="text" placeholder="current Location"/>
+                        </div>
+                        <div className="input-container">
+                            <Navigation color="#588157" className="placeholder-icon"/>
+                            <input placeholder="go to Location"></input>
+                        </div>
+                        <button>GO</button>
+                    </div>
+
+                    {/* location history */}
+                    <PreviousLocations
+                        locations={locations}
+                        locationNames={locationNames}
+                        isLoading={isLoading}
+                        selectLocation={selectLocation}
+                        selectedMarker={selectedMarker}
+                    />
                 </div>
-                
-              
+
+                {/* trigger container */}
+                <div className="trigger-container">
+                    <div className="logo">LOGO</div>
+
+                    <div className="trigger-1" onClick={toggleSidebar}>
+                        <Menu color="#588157"/>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div className="dashboard">
-              <div className="map-integration">
-                  <MapComponent />
-              </div> 
-          </div>
 
-
+            {/* map display */}
+            <div className="dashboard">
+                <div className="map-integration">
+                    <MapComponent
+                        locations={locations}
+                        locationNames={locationNames}
+                        isLoading={isLoading}
+                        selectedLocation={selectedLocation}
+                        selectedMarker={selectedMarker}
+                    />
+                </div>
+            </div>
         </div>
-)
+    );
 }
 
 export default Dashboard;

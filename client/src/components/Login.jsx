@@ -9,7 +9,7 @@ function Login(){
     return(
         <div className="Login-page">
             <div className="img-sec">
-                <img src={LoginImage}></img>
+                <img src={LoginImage} alt="tracking_image" className="image"></img>
             </div>
 
             <div className="input-sec">

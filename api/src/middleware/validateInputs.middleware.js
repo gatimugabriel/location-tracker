@@ -25,4 +25,4 @@ const validate = (req, res, next) => {
 };
 
 
-export default { signupInputs, passwordInput, validate }
+export { signupInputs, passwordInput, validate }

@@ -132,7 +132,7 @@ const refresh = asyncHandler(async (req, res) => {
     });
 });
 
-export default {
+export {
     signUp,
     signIn,
     signOut,

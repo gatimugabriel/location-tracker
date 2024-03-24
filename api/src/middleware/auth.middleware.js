@@ -83,4 +83,4 @@ const verifyRefreshToken = asyncHandler(async (req, res, next) => {
 })
 
 
-export default {verifyToken, verifyRefreshToken}
+export {verifyToken, verifyRefreshToken}

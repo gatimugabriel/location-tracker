@@ -1,0 +1,46 @@
+import {useEffect, useState} from "react";
+import axios from "axios";
+
+export const useHistory = () => {
+    const [locations, setLocations] = useState([])
+    const [locationNames, setLocationNames] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+
+    const fetchLocationHistory = async () => {
+        setIsLoading(true)
+        try {
+            const response = await axios.get("http://localhost:8080/api/v1/location");
+            setLocations(response.data);
+            return response.data
+        } catch (error) {
+            console.error("Error fetching locations:", error);
+        }
+    };
+
+
+    const fetchLocationNames = async ({locations}) => {
+        const names = await Promise.all(
+            // eslint-disable-next-line react/prop-types
+            locations.map(async ({latitude, longitude}) => {
+                const response = await axios.get(
+                    `https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=pk.eyJ1IjoiZ2dhYnUiLCJhIjoiY2x1MWdlb3UyMGxzODJqdDQ5eHM2MHh6MSJ9.8TQjMGznHl2PuLMmCRt9HQ`
+                )
+
+                return response.data.features[0]?.place_name || "Unknown location"
+            })
+        )
+
+        setLocationNames(names)
+        setIsLoading(false)
+    }
+
+    useEffect(() => {
+        fetchLocationHistory().then((data) => {
+            fetchLocationNames({locations: data}).then(() => console.log('fetched'))
+        });
+    }, []);
+
+
+    return {locations, locationNames, isLoading}
+}
+
