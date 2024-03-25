@@ -1,14 +1,14 @@
-import {useState} from "react";
-import {Link, useNavigate,} from 'react-router-dom';
+import {useContext, useState} from "react";
+import {Link, useNavigate} from 'react-router-dom';
 
 import "../styles/Login.css";
 import LoginImage from '../assets/Login-img.png';
-import {useLogin} from "../hooks/useLogin.js";
+import {AuthContext} from "../context/AuthContext.jsx";
+
 
 function Login() {
-    const {login, isLoading, error} = useLogin()
-    const navigate = useNavigate()
-
+    const {login, error, isLoading} = useContext(AuthContext)
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -25,8 +25,11 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await login(formData.email, formData.password);
-    };
+        if (await login(formData.email, formData.password)){
+            navigate('/')
+        }
+    }
+
     return (
         <div className="Login-page">
             <div className="img-sec">
@@ -60,8 +63,12 @@ function Login() {
 
                             {isLoading ? <button type="button" className="login-btn">please wait...</button>
                                 :
-                                <button type="submit" className="login-btn">Register</button>
-                            }                        </div>
+                                <button type="submit" className="login-btn">Login</button>
+                            }
+
+                            {/*<button type="submit" className="login-btn">Login</button>*/}
+
+                        </div>
                     </form>
 
                     {/*<p className="forgotpwd"> Forgot password?</p>*/}

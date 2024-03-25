@@ -1,22 +1,28 @@
-import {useState} from "react";
-import {ChevronRight, MapPin, Menu, Navigation, Save, Settings, Share2} from 'lucide-react';
+import {useContext, useState} from "react";
+import {ChevronRight, LogOut, MapPin, Menu, Navigation, Save, Settings, Share2} from 'lucide-react';
 
 import "../styles/Dashboard.css";
 import {useHistory} from "../hooks/useHistory.js";
 import MapComponent from "../components/Mapcomponent.jsx";
 import PreviousLocations from "../components/location/PreviousLocations.jsx";
+import {AuthContext} from "../context/AuthContext.jsx";
 
 function Dashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const {locations, locationNames, isLoading} = useHistory()
     const [selectedLocation, setSelectedLocation] = useState(null);
     const [selectedMarker, setSelectedMarker] = useState(null)
+    const {logout} = useContext(AuthContext)
 
     const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
     const selectLocation = (location, index) => {
         setSelectedLocation(location)
         setSelectedMarker(index)
+    }
+
+    const handleLogout = () => {
+        logout()
     }
 
     return (
@@ -38,7 +44,7 @@ function Dashboard() {
                             <Share2 color="#588157"/>
                         </div>
                         <div className="option">
-                            <ChevronRight color="#588157"/>
+                            <LogOut color="#588157" onClick={handleLogout}/>
                         </div>
                     </div>
 

@@ -1,82 +1,102 @@
-import {createContext, useContext, useReducer, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import axios from "axios";
+import {createContext, useState} from "react";
 import apiService from '../services/api.service'
 
-export const AuthContext = createContext()
+export const AuthContext = createContext();
 
-// const AuthProvider = ({children}) => {
-//     const [userInfo, setUserInfo] = useState(null)
-//     const [token, setToken] = useState(localStorage.getItem("siteT") || '')
-//     // const navigate = useNavigate()
-//
-//     const loginAction = async (data) => {
-//         try {
-//             const response = apiService.post('/auth/signin', data)
-//
-//             if (response.status === 200) {
-//                 setUserInfo(response.data?.user || 'Gabu')
-//                 setToken(response.data.accessToken)
-//                 localStorage.setItem("siteT", response.data.accessToken)
-//                 // navigate("/")
-//                 return true
-//             }
-//             throw new Error('response.data.message')
-//         } catch (e) {
-//             console.error(e);
-//         }
-//     }
-//
-//     const logOut = () => {
-//         setUserInfo(null)
-//         setToken("")
-//         localStorage.removeItem("siteT")
-//         // navigate('/login')
-//         return true
-//     }
-//
-//     return (
-//         <AuthContext.Provider value={{userInfo, token, loginAction, logOut}}>
-//             {children}
-//         </AuthContext.Provider>
-//     )
-// }
-//
-// export default AuthProvider
-//
-// export const useAuth = () => {
-//     return useContext(AuthContext)
-// }
-
-export const authReducer = (state, action) => {
-    switch (action.type) {
-        case "LOGIN":
-            return {
-                ...state,
-                user: action.payload.user,
-                token: action.payload.accessToken
-            }
-        case "LOGOUT":
-            return {
-                ...state,
-                user: null,
-                token: ''
-            }
-        default:
-            return state
-    }
-}
 export const AuthContextProvider = ({children}) => {
-    const [state, dispatch] = useReducer(authReducer, {
-        user: null,
-        // token: localStorage.getItem("siteT") || ''
-    })
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null);
 
-    console.log('AuthContext State', state)
+    const login = async (email, password) => {
+        setError(null)
+        setIsLoading(true)
 
-     return (
-         <AuthContext.Provider value={{...state, dispatch}}>
-             {children}
-         </AuthContext.Provider>
-     )
-}
+        if (email === '' || password === '') {
+            setError('All fields are required')
+            setIsLoading(false)
+            return
+        }
+
+        try {
+            const response = await apiService.post('/auth/signin', {email, password})
+
+            if (response.status !== 200) {
+                setError(response.data.message || 'An error occurred. Please try again.')
+                setIsLoading(false)
+                return
+            }
+
+            setUser(response.data)
+            setIsLoading(false)
+            return true
+        } catch (e) {
+            setIsLoading(false)
+
+            if (e.response && e.response.data) {
+                setError(e.response.data.message || 'An error occurred. Please try again.')
+            } else {
+                setError('An error occurred. Please try again.');
+            }
+        }
+    }
+
+    const signup = async (email, password, confirmPassword) => {
+        setSuccessMessage('')
+        setError(null)
+        setIsLoading(true)
+
+        if (email === '' || password === '' || confirmPassword === '') {
+            setError('All fields are required')
+            setIsLoading(false)
+            return
+        }
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match')
+            setIsLoading(false)
+            return
+        }
+
+        try {
+            const response = await apiService.post('/auth/signup', {email, password, confirmPassword})
+
+            if (response.status !== 201) {
+                setError(response.data.message || response.data.errors[0].msg || 'An error occurred. Please try again.')
+                setIsLoading(false)
+                return
+            }
+            setSuccessMessage(response.data.message)
+            setUser(response.data)
+            setIsLoading(false)
+
+            return true
+        } catch (e) {
+            setIsLoading(false)
+
+            if (e.response && e.response.data) {
+                setError(e.response.data.message || e.response.data.errors[0].msg || 'An error occurred. Please try again.')
+            } else {
+                setError('An error occurred. Please try again.');
+            }
+        }
+    }
+
+    const logout = () => {
+        setUser(null);
+    };
+
+    const value = {
+        user,
+        isLoading,
+        error,
+        successMessage,
+        login,
+        signup,
+        logout,
+    };
+
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+

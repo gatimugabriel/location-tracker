@@ -1,13 +1,12 @@
 import LoginImage from '../assets/Login-img.png';
 import "../styles/Login.css";
 import {Link, useNavigate} from 'react-router-dom';
-import {useState} from "react";
-import {useSignup} from "../hooks/useSignup.js";
+import {useContext, useState} from "react";
+import {AuthContext} from "../context/AuthContext.jsx";
 
 function Signup() {
-    const {signup, isLoading, successMessage, error} = useSignup()
+    const {signup, isLoading, error, successMessage} = useContext(AuthContext)
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -25,7 +24,9 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        await signup(formData.email, formData.password, formData.confirmPassword);
+        if (await signup(formData.email, formData.password, formData.confirmPassword)) {
+            navigate('/')
+        }
     };
 
     return (
@@ -74,9 +75,6 @@ function Signup() {
                                 :
                                 <button type="submit" className="login-btn">Register</button>
                             }
-
-                            {/*{isLoading && <p>Loading...</p>}*/}
-                            {/*<button type="submit" className="login-btn">Register</button>*/}
                         </div>
                     </form>
 
