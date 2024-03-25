@@ -4,7 +4,8 @@ const apiService = axios.create({
     baseURL: "https://location-tracker-687k.onrender.com/api/v1",
     headers: {
         "Content-type": "application/json"
-    }
+    },
+    withCredentials: true
 })
 
 apiService.interceptors.request.use((config) => {
