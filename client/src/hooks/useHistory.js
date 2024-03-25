@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import apiService from "../services/api.service";
 
 export const useHistory = () => {
     const [locations, setLocations] = useState([])
@@ -10,7 +11,7 @@ export const useHistory = () => {
         setIsLoading(true)
         try {
             // const response = await axios.get("http://192.168.4.105:8080/api/v1/location");
-            const response = await axios.get("http://localhost:8080/api/v1/location");
+            const response = await apiService.get("/location");
             setLocations(response.data);
             return response.data
         } catch (error) {

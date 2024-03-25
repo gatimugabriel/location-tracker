@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import apiService from "../services/api.service.js";
 
 export const useMap = () => {
     const [currentPosition, setCurrentPosition] = useState({
@@ -41,6 +42,7 @@ export const useMap = () => {
 
                     // Check if the new location is the same as the last recorded location
                     console.log('lastPosition', lastPosition)
+
                     if (lastPosition && lastPosition.latitude === latitude && lastPosition.longitude === longitude) {
                         console.log('User still in the same location. No need to send location to server.');
                     } else {
@@ -48,6 +50,7 @@ export const useMap = () => {
                         await sendLocationToServer({latitude, longitude})
                         setLastPosition({latitude, longitude})
                     }
+
                 }, timeoutDuration)
                 setTimeoutId(newTimeoutId)
             }
@@ -91,12 +94,12 @@ export const useMap = () => {
 
     const sendLocationToServer = async ({latitude, longitude}) => {
         try {
-            const response = await axios.post("http://127.0.0.1:8080/api/v1/location", {
+            const response = await apiService.post("/location", {
                 latitude, longitude
             });
             console.log('Location recorded', response.data)
         } catch (err) {
-            console.error("Error sending location to server");
+            console.error("Error sending location to server", err.message);
             console.error(err);
         }
     };

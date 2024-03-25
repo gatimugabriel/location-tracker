@@ -12,6 +12,7 @@ const PreviousLocations = ({locations, locationNames, isLoading, selectLocation,
             <hr/>
 
             <section className="history-container">
+                {locationNames.length === 0 && <p>Once locations are saved, they will appear here</p>}
             {/* eslint-disable-next-line react/prop-types */}
             {locationNames.map((location, index) => (
                 <div key={index} onClick={() => {

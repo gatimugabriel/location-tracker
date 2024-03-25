@@ -4,7 +4,10 @@ import apiService from '../services/api.service'
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({children}) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        const userInfo = localStorage.getItem('userInfo');
+        return userInfo ? JSON.parse(userInfo) : null;
+    })
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
@@ -27,6 +30,9 @@ export const AuthContextProvider = ({children}) => {
                 setIsLoading(false)
                 return
             }
+
+            // save user to local storage
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
 
             setUser(response.data)
             setIsLoading(false)
@@ -67,6 +73,9 @@ export const AuthContextProvider = ({children}) => {
                 setIsLoading(false)
                 return
             }
+            // save user to local storage
+            localStorage.setItem('userInfo', JSON.stringify(response.data));
+
             setSuccessMessage(response.data.message)
             setUser(response.data)
             setIsLoading(false)
