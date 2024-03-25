@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiService = axios.create({
-    baseURL: "http://localhost:8080/api/v1",
+    baseURL: "https://location-tracker-687k.onrender.com/api/v1",
     headers: {
         "Content-type": "application/json"
     }

@@ -25,7 +25,7 @@ function Signup() {
         e.preventDefault();
 
         if (await signup(formData.email, formData.password, formData.confirmPassword)) {
-            navigate('/')
+            navigate('/dashboard')
         }
     };
 

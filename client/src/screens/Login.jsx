@@ -26,7 +26,7 @@ function Login() {
         e.preventDefault();
 
         if (await login(formData.email, formData.password)){
-            navigate('/')
+            navigate('/dashboard')
         }
     }
 
