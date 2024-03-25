@@ -2,9 +2,9 @@ import jwt from "jsonwebtoken";
 const {sign} = jwt
 import { authConfig } from '../config/index.js';
 
-const tokenGenerator = async (res, userId, userName, email, role) => {
+const tokenGenerator = async (res, userId, email,) => {
     const accessToken = await sign(
-        {userId, userName, email, role},
+        {userId, email},
         authConfig.jwt_access_token_secret,
         {
             expiresIn: "15m",

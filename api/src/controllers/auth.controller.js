@@ -7,67 +7,63 @@ const {User, Token} = db;
 // @ desc --- Create new user
 // @ route  --POST-- [base_api]/auth/signup
 const signUp = asyncHandler(async (req, res) => {
-    const {username, password, confirmPassword} = req.body;
+    const {email, password, confirmPassword} = req.body;
 
     if (password !== confirmPassword) {
         res.status(400);
         throw new Error("Passwords do not match");
     }
 
-    try {
-        const usernameExists = await User.findOne({username});
-        if (usernameExists) {
-            res.status(409);
-            throw new Error("username is already taken. Try another one");
-        }
-
-        const newUser = new User({
-            username,
-            password,
-        });
-
-        await newUser.save();
-
-        // Generate tokens after user sign up
-        const {accessToken, refreshToken} = await tokenGenerator(
-            res,
-            newUser._id,
-            newUser.username,
-        );
-
-        // Save refresh token
-        const newToken = await Token.create({
-            user_id: newUser._id,
-            token: refreshToken,
-            action: 'auth',
-            expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
-        });
-
-        await newToken.save();
-
-        res.status(201).json({
-            message: "User created successfully",
-            details: newUser,
-            accessToken
-        })
-    } catch (error) {
-        console.error(error)
-        res.status(500)
-        throw new Error(error)
+    const emailExists = await User.findOne({email});
+    if (emailExists) {
+        res.status(409);
+        throw new Error("Email is already in use. Try another one");
     }
+
+    const newUser = new User({
+        email,
+        password,
+    });
+
+    await newUser.save();
+
+    // Generate tokens after user sign up
+    const {accessToken, refreshToken} = await tokenGenerator(
+        res,
+        newUser._id,
+        newUser.email,
+    );
+
+    // Save refresh token
+    const newToken = await Token.create({
+        user_id: newUser._id,
+        token: refreshToken,
+        action: 'auth',
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // 7 days
+    });
+
+    await newToken.save();
+
+    res.status(201).json({
+        message: "User created successfully",
+        user: newUser.email,
+        accessToken
+    })
+
 });
 
 // @ desc ---- User Login -> set tokens
 // @ route  --POST-- [base_api]/auth/signIn
 const signIn = asyncHandler(async (req, res) => {
-    const {username, password} = req.body;
+    console.log(req.body)
+    const {email, password} = req.body;
     let user;
 
-    if (username) {
-        user = await User.findOne({username});
+    if (email) {
+        user = await User.findOne({email});
     } else {
         res.status(400);
-        throw new Error("Email or username is required");
+        throw new Error("Email is required");
     }
 
     if (!user) {
@@ -80,7 +76,7 @@ const signIn = asyncHandler(async (req, res) => {
         const {accessToken, refreshToken} = await tokenGenerator(
             res,
             user._id,
-            user.username,
+            user.email,
         );
 
         // save refresh token
@@ -92,9 +88,9 @@ const signIn = asyncHandler(async (req, res) => {
         });
 
         return res.status(200).json({
-            user: username,
-            accessToken: accessToken,
-        });
+               user: email,
+               accessToken: accessToken,
+            });
     } else {
         res.status(401);
         throw new Error("Invalid Credentials");

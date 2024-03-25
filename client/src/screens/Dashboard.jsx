@@ -3,8 +3,8 @@ import {ChevronRight, MapPin, Menu, Navigation, Save, Settings, Share2} from 'lu
 
 import "../styles/Dashboard.css";
 import {useHistory} from "../hooks/useHistory.js";
-import MapComponent from "./Mapcomponent.jsx";
-import PreviousLocations from "./location/PreviousLocations.jsx";
+import MapComponent from "../components/Mapcomponent.jsx";
+import PreviousLocations from "../components/location/PreviousLocations.jsx";
 
 function Dashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(false);

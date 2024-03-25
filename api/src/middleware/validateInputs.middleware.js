@@ -1,7 +1,7 @@
 import { check, validationResult } from "express-validator";
 
 const signupInputs = [
-    check("username", "username is required").not().isEmpty(),
+    check("email", "Please use a valid email").isEmail(),
     check("confirmPassword", "Confirm Password is required").not().isEmpty(),
 ]
 
@@ -15,7 +15,6 @@ const passwordInput = [
             "Password should have both uppercase and lowercase letters, numbers, and special characters"
         ),
 ];
-
 
 const validate = (req, res, next) => {
     const errors = validationResult(req);

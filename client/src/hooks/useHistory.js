@@ -9,16 +9,15 @@ export const useHistory = () => {
     const fetchLocationHistory = async () => {
         setIsLoading(true)
         try {
-            const response = await axios.get("http://192.168.4.105:8080/api/v1/location");
-            // const response = await axios.get("localhost:8080/api/v1/location");
+            // const response = await axios.get("http://192.168.4.105:8080/api/v1/location");
+            const response = await axios.get("http://localhost:8080/api/v1/location");
             setLocations(response.data);
             return response.data
         } catch (error) {
             console.error("Error fetching locations:", error);
         }
     };
-
-
+    
     const fetchLocationNames = async ({locations}) => {
         const names = await Promise.all(
             // eslint-disable-next-line react/prop-types

@@ -2,7 +2,7 @@ import {compare, genSalt, hash} from 'bcrypt';
 
 export default (mongoose) => {
     const UserSchema = new mongoose.Schema({
-        username: {
+        email: {
             type: String,
             unique: true,
             required: true,
