@@ -1,20 +1,20 @@
 import asyncHandler from 'express-async-handler';
 import db from '../models/index.js';
-import {tokenGenerator} from '../utils/index.js';
+import { tokenGenerator } from '../utils/index.js';
 
-const {User, Token} = db;
+const { User, Token } = db;
 
 // @ desc --- Create new user
 // @ route  --POST-- [base_api]/auth/signup
 const signUp = asyncHandler(async (req, res) => {
-    const {email, password, confirmPassword} = req.body;
+    const { email, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
         res.status(400);
         throw new Error("Passwords do not match");
     }
 
-    const emailExists = await User.findOne({email});
+    const emailExists = await User.findOne({ email });
     if (emailExists) {
         res.status(409);
         throw new Error("Email is already in use. Try another one");
@@ -28,7 +28,7 @@ const signUp = asyncHandler(async (req, res) => {
     await newUser.save();
 
     // Generate tokens after user sign up
-    const {accessToken, refreshToken} = await tokenGenerator(
+    const { accessToken, refreshToken } = await tokenGenerator(
         res,
         newUser._id,
         newUser.email,
@@ -55,12 +55,11 @@ const signUp = asyncHandler(async (req, res) => {
 // @ desc ---- User Login -> set tokens
 // @ route  --POST-- [base_api]/auth/signIn
 const signIn = asyncHandler(async (req, res) => {
-    console.log(req.body)
-    const {email, password} = req.body;
+    const { email, password } = req.body;
     let user;
 
     if (email) {
-        user = await User.findOne({email});
+        user = await User.findOne({ email });
     } else {
         res.status(400);
         throw new Error("Email is required");
@@ -73,7 +72,7 @@ const signIn = asyncHandler(async (req, res) => {
 
     // compare password
     if (await user.matchPassword(password)) {
-        const {accessToken, refreshToken} = await tokenGenerator(
+        const { accessToken, refreshToken } = await tokenGenerator(
             res,
             user._id,
             user.email,
@@ -88,9 +87,9 @@ const signIn = asyncHandler(async (req, res) => {
         });
 
         return res.status(200).json({
-               user: email,
-               accessToken: accessToken,
-            });
+            user: email,
+            accessToken
+        });
     } else {
         res.status(401);
         throw new Error("Invalid Credentials");
@@ -100,7 +99,7 @@ const signIn = asyncHandler(async (req, res) => {
 // @ desc ---- Logout user -> destroy refresh token
 // @ route--GET-- [base_api] / auth / sign - out
 const signOut = asyncHandler(async (req, res) => {
-    const {userId} = req.user;
+    const { userId } = req.user;
 
     const destroyToken = await Token.deleteOne({
         user_id: userId,
@@ -116,13 +115,13 @@ const signOut = asyncHandler(async (req, res) => {
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
 
-    res.status(200).json({message: "Logged Out"});
+    res.status(200).json({ message: "Logged Out" });
 });
 
 // @ desc ---- Refresh Access Token
 // @ route  --POST-- [base_api]/auth/refresh
 const refresh = asyncHandler(async (req, res) => {
-    const {userId} = req.user;
+    const { userId } = req.user;
     const user = await User.findById(userId);
     if (!user) {
         res.status(404);
@@ -130,15 +129,15 @@ const refresh = asyncHandler(async (req, res) => {
     }
 
     // generate new access token
-    const {accessToken} = await tokenGenerator(
+    const { accessToken } = await tokenGenerator(
         res,
         user._id,
-        user.username,
+        user.email,
     );
 
     return res.status(200).json({
-        user: user.username,
-        accessToken: accessToken
+        user: user.email,
+        accessToken,
     });
 });
 

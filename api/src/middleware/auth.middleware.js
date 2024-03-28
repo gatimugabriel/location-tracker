@@ -2,19 +2,19 @@ import jwt from "jsonwebtoken";
 import dotenv from 'dotenv';
 
 dotenv.config()
-const {verify} = jwt
+const { verify } = jwt
 
 import asyncHandler from 'express-async-handler';
 import db from '../models/index.js';
 
-const {User, Token} = db;
+const { User, Token } = db;
 
 const verifyToken = asyncHandler(async (req, res, next) => {
     const authHeader = req.header('Authorization')
-    const accessToken = req.cookies['accessToken'] || (authHeader && authHeader.split(' ')[1])
+    const accessToken = (authHeader && authHeader.split(' ')[1]) || req.cookies['accessToken']
 
     if (!accessToken) {
-        return res.status(403).json({
+        return res.status(401).json({
             success: false,
             message: "Missing Access Token",
         });
@@ -42,6 +42,7 @@ const verifyToken = asyncHandler(async (req, res, next) => {
 
 const verifyRefreshToken = asyncHandler(async (req, res, next) => {
     const refreshToken = req.cookies['refreshToken']
+
     if (!refreshToken) {
         return res.status(403).json({
             success: false,
@@ -55,11 +56,9 @@ const verifyRefreshToken = asyncHandler(async (req, res, next) => {
         async (err, decoded) => {
             if (err) {
                 if (err.name === 'TokenExpiredError') {
-                    res.status(401);
-                    throw new Error("Expired Refresh Token");
+                    res.status(401).send("Expired Refresh Token");
                 } else {
-                    res.status(401);
-                    throw new Error("Invalid Refresh token");
+                    res.status(401).send("Invalid Refresh token");
                 }
             }
 
@@ -80,4 +79,4 @@ const verifyRefreshToken = asyncHandler(async (req, res, next) => {
     );
 })
 
-export {verifyToken, verifyRefreshToken}
+export { verifyToken, verifyRefreshToken }

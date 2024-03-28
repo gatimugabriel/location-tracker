@@ -7,7 +7,7 @@ const tokenGenerator = async (res, userId, email,) => {
         {userId, email},
         authConfig.jwt_access_token_secret,
         {
-            expiresIn: "6h",
+            expiresIn: "1m",
         }
     );
 
@@ -15,7 +15,7 @@ const tokenGenerator = async (res, userId, email,) => {
         {userId},
         authConfig.jwt_refresh_token_secret,
         {
-            expiresIn: "7d",
+            expiresIn: "2m",
         }
     );
 
@@ -23,14 +23,14 @@ const tokenGenerator = async (res, userId, email,) => {
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "None",
     });
 
     // Set refresh token in HTTP-only cookie
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        sameSite: "None",
     });
 
     return { accessToken, refreshToken };
