@@ -7,7 +7,7 @@ const tokenGenerator = async (res, userId, email,) => {
         {userId, email},
         authConfig.jwt_access_token_secret,
         {
-            expiresIn: "1m",
+            expiresIn: "30m",
         }
     );
 
@@ -15,7 +15,7 @@ const tokenGenerator = async (res, userId, email,) => {
         {userId},
         authConfig.jwt_refresh_token_secret,
         {
-            expiresIn: "2m",
+            expiresIn: "15d",
         }
     );
 
