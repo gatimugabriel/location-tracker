@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const apiService = axios.create({
-    baseURL: "https://location-tracker-687k.onrender.com/api/v1",
-    // baseURL: "http://127.0.0.1:8080/api/v1",
+    // baseURL: "https://location-tracker-687k.onrender.com/api/v1",
+    baseURL: "http://127.0.0.1:8080/api/v1",
     headers: {
         "Content-type": "application/json",
     },
@@ -24,8 +24,9 @@ apiService.interceptors.request.use(
 // interceptor for API calls
 apiService.interceptors.response.use(   
     response => response,
-    async error => {
+    async (error) => {
         const originalRequest = error.config;
+        console.log(error)
         if (error.response.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
 

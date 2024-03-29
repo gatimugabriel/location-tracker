@@ -27,8 +27,11 @@ const saveLocation = asyncHandler(async (req, res) => {
 // @ desc --- Get Locations
 // @ route  --GET-- [base_api]/location
 const getLocations = asyncHandler(async (req, res) => {
-    const locations = await Location.find({});
+    const locations = await Location.find({})
+        .sort({ createdAt: -1 })
+        .limit(5)
 
+    console.log(locations)
     res.status(200).json(locations);
 })
 
