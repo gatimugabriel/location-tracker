@@ -19,6 +19,7 @@ import "./index.css";
 // import App from "./App";
 import "leaflet/dist/leaflet.css"; // <- Leaflet styles
 import Signup from './components/Signup.jsx';
+import HomePage from './screens/HomePage.jsx';
 
 
 const router = createBrowserRouter(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/dashboard" element={<Dashboard/>} />
+            <Route path="/homepage" element={<HomePage/>} />
 
 
 
