@@ -11,6 +11,7 @@ const saveLocation = asyncHandler(async (req, res) => {
     const newLocation = new Location({
         latitude,
         longitude,
+        user: req.user.userId,
     });
 
     await newLocation.save();
@@ -27,7 +28,7 @@ const saveLocation = asyncHandler(async (req, res) => {
 // @ desc --- Get Locations
 // @ route  --GET-- [base_api]/location
 const getLocations = asyncHandler(async (req, res) => {
-    const locations = await Location.find({})
+    const locations = await Location.find({user: req.user.userId})
         .sort({ createdAt: -1 })
         .limit(5)
 
