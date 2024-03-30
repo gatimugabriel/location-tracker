@@ -1,5 +1,6 @@
 import axios from "axios";
 const SERVER_ORIGIN = import.meta.env.VITE_SERVER_ORIGIN || import.meta.env.VITE_SERVER_ORIGIN_LOCAL
+console.log(SERVER_ORIGIN)
 
 const apiService = axios.create({
     baseURL: `${SERVER_ORIGIN}/api/v1`,
