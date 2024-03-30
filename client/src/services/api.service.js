@@ -1,8 +1,8 @@
 import axios from "axios";
+const SERVER_ORIGIN = import.meta.env.REACT_APP_SERVER_ORIGIN || import.meta.env.REACT_APP_SERVER_ORIGIN_LOCAL
 
 const apiService = axios.create({
-    baseURL: "https://location-tracker-687k.onrender.com/api/v1",
-    // baseURL: "http://127.0.0.1:8080/api/v1",
+    baseURL: `${SERVER_ORIGIN}/api/v1`,
     headers: {
         "Content-type": "application/json",
     },
