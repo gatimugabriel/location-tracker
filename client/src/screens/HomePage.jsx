@@ -1,58 +1,66 @@
+import {Link} from 'react-router-dom';
 import "../styles/Homepage.css"
-import LoginPage from '../assets/login-page.png'; 
-import MainPage from '../assets/main-page.png'; 
-import { Link } from 'react-router-dom';
+import MainPage from '../assets/main-page.png';
+import LoginPage from '../assets/login-page.png';
+import maps from '../assets/maps.jpg'
+import pins from '../assets/pins.jpg'
 
-export default function HomePage() {
+const HomePage = () => {
     return (
-        <div className="homepage">
-            <div className="logo">
-                LOGO
-
-            </div>
-            <div className="heading">
-                <h2>Location Tracker</h2>
-            </div>
-
-            <div className="grid-body">
-                <div className="row-1">
-                    <div className="img-1">
-                        <img src={LoginPage}/>
-
+        <main className="homepage">
+            <section className="image_wrapper" id="hero_section">
+                <img alt="hero" loading="lazy" src={maps} id="hero_image"/>
+                <section className="overlay" id="hero_content">
+                    <div className="hero-text">
+                        <h1>Experience the Freedom of Real-Time Tracking</h1>
+                        <p>Discover the world with Location Tracker! Effortlessly navigate with confidence and unlock a
+                            world of possibilities.</p>
+                        <Link to="/signup" className="cta-button">Get Started</Link>
                     </div>
-                    <div className="info-1">
-                        <p>
-                        Discover the world with Location Tracker! Experience the freedom of real-time tracking and effortless navigation. Whether you're planning your next adventure or simply exploring your neighborhood, our platform offers the tools you need to navigate with confidence. Join us now and unlock a world of possibilities!
-                        </p>
+                </section>
+            </section>
 
+            <section className="features-section">
+                <div className="container">
+                    <h2>Key Features</h2>
+                    <div className="feature-row">
+                        <div className="feature-card">
+                            <img src={LoginPage} alt="Login Page" loading="lazy"/>
+                            <h3>Secure Authentication</h3>
+                            <p>Ensure your privacy with robust authentication measures.</p>
+                        </div>
+                        <div className="feature-card">
+                            <img src={pins} alt="Login Page" loading="lazy"/>
+                            <i className="fas fa-map-marker-alt"></i>
+                            <h3>Real-Time Location Tracking</h3>
+                            <p>Pinpoint your current location with ease and precision.</p>
+                        </div>
+                        <div className="feature-card">
+                            <img src={maps} alt="Login Page" loading="lazy"/>
+                            <i className="fas fa-history"></i>
+                            <h3>Location History</h3>
+                            <p>Access your last five visited locations with a simple click.</p>
+                        </div>
+                        <div className="feature-card">
+                            <img src={MainPage} alt="Main Page"/>
+                            <h3>Enhanced Navigation</h3>
+                            <p>Seamlessly zoom in and out for detailed exploration.</p>
+                        </div>
                     </div>
                 </div>
-                <div className="row-2">
-                    <div className="info-2">
-                        <p>
-                        <ul>
-                        <li>Trace Your Location: Effortlessly pinpoint your current location in real-time.</li>
-                        <li>Track Your History: Access your last five visited locations with ease.</li>
-                        <li>Secure Authentication: Ensure your privacy with robust authentication measures.</li>
-                        <li>Enhanced Navigation: Seamlessly zoom in and out for detailed exploration.</li>
-                        </ul>
-                        </p>
+            </section>
 
-                    </div>
-                    <div className="img-2">
-                        <img src={MainPage}/>
-
-                    </div>
-                    </div>
-
-            </div>
-            
-            <div className="login-part">
-            <p>Click the captivating button below to witness the magic unfold.</p>
-            <Link to="/signup"><button>Register</button></Link>
-                
-            </div>
-        </div>
+            <footer>
+                <div className="container">
+                    <p>&copy; 2024 Location Tracker. All rights reserved.</p>
+                    <nav>
+                        <Link to="/signup">Sign Up</Link>
+                        <Link to="/login">Login</Link>
+                    </nav>
+                </div>
+            </footer>
+        </main>
     );
 }
 
+export default HomePage;

@@ -5,7 +5,7 @@ import "./index.css";
 import "leaflet/dist/leaflet.css"; // <- Leaflet styles
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
 
-import ErrorComponent from "./components/shared/error/ErrorComponent.jsx";
+import ErrorComponent from "./components/shared/ErrorComponent.jsx";
 import PrivateRoute from "./components/auth/PrivateRoute.jsx";
 import {AuthContextProvider} from "./context/AuthContext.jsx";
 

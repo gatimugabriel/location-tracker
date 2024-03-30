@@ -1,5 +1,5 @@
 import {useContext, useState} from "react";
-import {ChevronRight, LogOut, MapPin, Menu, Navigation, Save, Settings, Share2} from 'lucide-react';
+import {LogOut, MapPin, Menu, Navigation, Save, Settings, Share2} from 'lucide-react';
 
 import "../styles/Dashboard.css";
 import {useHistory} from "../hooks/useHistory.js";

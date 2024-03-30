@@ -36,7 +36,7 @@ export const useMap = () => {
             const {latitude, longitude} = coords;
             setCurrentPosition({lat: latitude, lng: longitude});
 
-            if (lastPosition === null || hasSignificantDistanceTravelled(lastPosition, {latitude, longitude}, 1)) {
+            if (lastPosition === null || hasSignificantDistanceTravelled(lastPosition, {latitude, longitude}, 1000)) {
                 clearTimeout(timeoutId)
                 const newTimeoutId = setTimeout(async () => {
 
@@ -87,9 +87,9 @@ export const useMap = () => {
 
         console.log(minDistance, distanceInMetres)
         console.log(distanceInMetres >= minDistance)
-        return distanceInMetres >= minDistance;
-
         // return true
+
+        return distanceInMetres >= minDistance;
     }
 
     const sendLocationToServer = async ({latitude, longitude}) => {
