@@ -8,16 +8,25 @@ export default function ErrorComponent({title, description}) {
     }
 
     return (
-        <div>
+        <main style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+        }}>
+            <div>
             <h1>{title}</h1>
             <p>
                 {description}
             </p>
-            <div>
+            <div style={{
+                display:"flex",
+                justifyContent:"space-around"
+            }}>
                 <button onClick={handlePrevPage}>Back</button>
                 <Link to={"/"}>Go to Home</Link>
             </div>
-        </div>
+            </div>
+        </main>
     );
 }
 

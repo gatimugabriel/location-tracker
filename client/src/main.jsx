@@ -5,12 +5,12 @@ import "./index.css";
 import "leaflet/dist/leaflet.css"; // <- Leaflet styles
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
 
-import ErrorComponent from "./components/shared/error/ErrorComponent.jsx";
+import ErrorComponent from "./components/shared/ErrorComponent.jsx";
 import PrivateRoute from "./components/auth/PrivateRoute.jsx";
 import {AuthContextProvider} from "./context/AuthContext.jsx";
 
 // --- screens --- //
-import Homepage from "./screens/Homepage.jsx";
+import HomePage from "./screens/HomePage.jsx";
 import Signup from './screens/Signup.jsx';
 import Login from "./screens/Login.jsx";
 
@@ -20,9 +20,8 @@ import Dashboard from './screens/Dashboard.jsx';
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<App/>}>
-
             {/* public pages */}
-            <Route index={true} path="/" element={<Homepage/>}/>
+            <Route index={true} path="/" element={<HomePage/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/signup" element={<Signup/>}/>
 
