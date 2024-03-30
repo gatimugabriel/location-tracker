@@ -13,7 +13,7 @@ const app = express();
 
 // --- CORS ---//
 const corsOptions = {
-    origin: process.env.CLIENT_ORIGIN,
+    origin: [process.env.CLIENT_ORIGIN, process.env.CLIENT_LOCAL_ORIGIN],
     credentials: true,
 }
 app.use(cors(corsOptions));
