@@ -41,12 +41,9 @@ export const useMap = () => {
                 const newTimeoutId = setTimeout(async () => {
 
                     // Check if the new location is the same as the last recorded location
-                    console.log('lastPosition', lastPosition)
-
                     if (lastPosition && lastPosition.latitude === latitude && lastPosition.longitude === longitude) {
                         console.log('User still in the same location. No need to send location to server.');
                     } else {
-                        console.log('send coordinates')
                         await sendLocationToServer({latitude, longitude})
                         setLastPosition({latitude, longitude})
                     }
@@ -97,7 +94,6 @@ export const useMap = () => {
             const response = await apiService.post("/location", {
                 latitude, longitude
             });
-            console.log('Location recorded', response.data)
         } catch (err) {
             console.error("Error sending location to server", err.message);
             console.error(err);
